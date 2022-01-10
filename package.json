@@ -1,0 +1,22 @@
+{
+  "name": "youcode-2.0",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "db": "json-server --watch db.json --port 5000",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.4",
+    "vite": "^2.6.4"
+  },
+  "dependencies": {
+    "apexcharts": "^3.32.1",
+    "daisyui": "^1.22.0",
+    "install": "^0.13.0",
+    "json-server": "^0.17.0",
+    "tailwindcss": "^2.2.19"
+  }
+}
