@@ -6,3 +6,4 @@ export { adminCenter } from './dashboard/adminCenter';
 export { addCenter } from './forms/addCenter';
 export { addManager } from './forms/addManager';
 export { addPromotion } from './forms/addPromotion';
+export { Modal } from './Modals';

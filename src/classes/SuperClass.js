@@ -4,7 +4,7 @@ import { get, put, post, AuthObj } from '../helpers'
 export class SuperClass {
     super = {}
 
-   
+
 
     adminCenters = async (token) => {
         const result = await get('/admin/all', token)
@@ -29,6 +29,15 @@ export class SuperClass {
 
     addCenter = async (data) => {
         const result = await post('/center/add', data, AuthObj.connectedUser.token)
+        return result
+    }
+
+    assign = async (data) => {
+        const result = await post('/admin/assign', data, AuthObj.connectedUser.token)
+        return result
+    }
+    promotions = async () => {
+        const result = await get('/promotion/all', AuthObj.connectedUser.token)
         return result
     }
 }

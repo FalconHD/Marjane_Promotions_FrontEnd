@@ -11,6 +11,17 @@ export const get = async (url, token) => {
     });
     return await response.json()
 };
+export const Delete = async (url, token) => {
+    url = EndPoint + url
+    const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+            "accept": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
+    });
+    return await response.json()
+};
 
 export const post = async (url, body, token) => {
     url = EndPoint + url
@@ -25,12 +36,14 @@ export const post = async (url, body, token) => {
     return await response.json()
 };
 
-export const put = async (url, body) => {
+export const put = async (url, body, token) => {
     url = EndPoint + url
     const response = await fetch(url, {
         method: "PUT",
         headers: {
             "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`,
+
         },
         body: JSON.stringify(body)
     });

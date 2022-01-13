@@ -5,12 +5,14 @@ export const centers = ({ user, centers, admins, state }) => {
 
    if (state) return addCenter({ user, admins })
 
+
+
    return (` 
-    <div class="flex overflow-hidden bg-white pt-16">
+    <div class="h-full flex overflow-hidden bg-white pt-16">
       ${sidebar(user)}
-      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
+      <div class="bg-gray-900 h-full opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-         <main>
+         <main class="h-full">
             <div class="pt-6 px-4">
             <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
             <div class="flex items-center justify-between mb-4">
@@ -46,15 +48,15 @@ export const centers = ({ user, centers, admins, state }) => {
                                        </div>
                                     </td>
                                     <td>
-                                    <select class="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2">
+                                    <select  class="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2">
                                           ${center?.adminCenter ? (`<option value="${center?.adminCenter.id}">${center?.adminCenter.name.toUpperCase()}</option>`) : (`<option value="">No Admin</option>`)}
                                           ${admins.map(adminCenter => (`
-                                             ${center?.adminCenter?.id != adminCenter.id && (`<option value="${adminCenter?.id}">${adminCenter?.name.toUpperCase()}</option>`)}
-                                          `)).join("")}
+                                             ${center?.adminCenter?.id != adminCenter.id && (`<option  value="${adminCenter?.id}">${adminCenter?.name.toUpperCase()}</option>`)}
+                                             `)).join("")}
                                        </select>
-                                    </td>
-                                 </tr>`)).join("")}
-                           </tbody>
+                                       </td>
+                                    </tr>`)).join("")}
+                                 </tbody>
                         </table>
                      </div>
                   </div>
@@ -99,8 +101,9 @@ export const centers = ({ user, centers, admins, state }) => {
          <p class="text-center text-sm text-gray-500 my-10">
             &copy; 2019-2021 <a href="https://themesberg.com" class="hover:underline" target="_blank">Marjane</a>. All rights reserved.
          </p>
-      </div>
+      
    </div>
+</div>
     `)
 }
 

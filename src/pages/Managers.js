@@ -1,14 +1,16 @@
-import { addManager, sidebar } from "../components"
+import { addManager, Modal, sidebar } from "../components"
 
 
 export const Managers = ({ user, managers, categories, state }) => {
-    if (state) return addManager({ user, categories })
-    console.log(user);
-    return (` 
-    <div class="flex overflow-hidden bg-white pt-16">
+   if (state) return addManager({ user, categories })
+   console.log(user);
+
+
+   return (` 
+    <div class="flex h-full overflow-hidden bg-white pt-16">
       ${sidebar(user)}
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-         <main>
+         <main class="h-full">
             <div class="pt-6 px-4">
                   <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
                      <div class="flex items-center justify-between mb-4">
@@ -47,7 +49,7 @@ export const Managers = ({ user, managers, categories, state }) => {
                                     ${new Intl.DateTimeFormat(['ban', 'id']).format(new Date(manager?.createdAt))}
                                  </div>
                                  <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                 <a onclick="_.goToSync('/managers',true)"  class="cursor-pointer text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
+                                 <a href="/managers#updateManager+${manager.id}"    class="cursor-pointer text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" 
                                     stroke-linejoin="round" 
@@ -57,7 +59,7 @@ export const Managers = ({ user, managers, categories, state }) => {
                                     </path>
                                 </svg>
                                 </a>
-                                <a onclick="_.goToSync('/managers',true)"  class="cursor-pointer text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
+                                <a href="/managers#deletManager+${manager.id}"   class="cursor-pointer text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg inline-flex items-center p-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
                                     class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline>
@@ -66,8 +68,9 @@ export const Managers = ({ user, managers, categories, state }) => {
                                 </a>
                                  </div>
                               </div>
-                           </li>`
-                            )).join("")}
+                              ${Modal(`deletManager+${manager.id}`, managers, () => _.deleteManager())}
+                              ${Modal(`updateManager+${manager.id}`, managers)}
+                           </li>`)).join("")}
                         </ul >
                      </div >
                   </div >

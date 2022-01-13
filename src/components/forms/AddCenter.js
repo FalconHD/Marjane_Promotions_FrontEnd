@@ -13,11 +13,11 @@ export const addCenter = ({ user, admins }) => {
    };
 
    return (`
-        <div class="flex overflow-hidden bg-white pt-16">
+        <div class="flex h-full overflow-hidden bg-white pt-16">
       ${sidebar(user)}
-      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
+      <div class="bg-gray-900 h-full opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-         <main>
+         <main class="h-full">
             <div class="pt-6 px-4">
             <div class="bg-white py-6 sm:py-8 lg:py-8">
             <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">

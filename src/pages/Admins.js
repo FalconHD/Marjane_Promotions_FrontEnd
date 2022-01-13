@@ -7,10 +7,10 @@ export const Admins = ({ user, admins, state }) => {
 
 
    return (` 
-    <div class="flex overflow-hidden bg-white pt-16">
+    <div class="h-full flex overflow-hidden bg-white pt-16">
       ${sidebar(user)}
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-         <main>
+         <main class="h-full">
             <div class="pt-6 px-4">
                   <div class="bg-white shadow rounded-lg mb-4 p-4 sm:p-6 h-full">
                      <div class="flex items-center justify-between mb-4">

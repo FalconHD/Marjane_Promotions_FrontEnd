@@ -8,6 +8,10 @@ export class ManagerClass {
         const res = await get('/manager/promotion', AuthObj.connectedUser.token)
         return res
     }
+    updatePromotionStatus = async ({ promotionId, status }) => {
+        const res = await put((`/promotion/${promotionId}`), { status }, AuthObj.connectedUser.token)
+        return res
+    }
 
 }
 

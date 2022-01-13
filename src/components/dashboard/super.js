@@ -6,11 +6,11 @@ export const SuperAdmin = ({ user, adminCenters }) => {
    console.log(adminCenters);
 
    return (` 
-    <div class="flex overflow-hidden bg-white pt-12">
+    <div class="flex h-full overflow-hidden bg-white pt-12">
       ${sidebar(user)}
-      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
+      <div class="bg-gray-900 h-full opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
       <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
-         <main>
+         <main class="h-full">
          <div class="pt-6 px-4">
          <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
             <div class="mb-4 flex items-center justify-between">

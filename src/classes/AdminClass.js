@@ -1,5 +1,5 @@
 
-import { get, put, post, AuthObj } from '../helpers'
+import { get, put, post, Delete, AuthObj } from '../helpers'
 
 export class AdminClass {
 
@@ -32,6 +32,11 @@ export class AdminClass {
     products = async () => {
         const token = AuthObj.connectedUser.token
         const result = await get('/product/all', token)
+        return result
+    }
+    deletManager = async (id) => {
+        const token = AuthObj.connectedUser.token
+        const result = await Delete((`/manager/${id}`), token)
         return result
     }
 

@@ -1,4 +1,4 @@
-import { SuperObj, AuthObj, AdminObj,ManagerObj } from "../helpers"
+import { SuperObj, AuthObj, AdminObj, ManagerObj } from "../helpers"
 import ApexCharts from 'apexcharts'
 
 
@@ -6,42 +6,51 @@ export const witchAdmin = async () => {
     const connectedUser = AuthObj.connectedUser
     let adminCenters = []
     let categeories = []
+    let promotions = []
     if (connectedUser.data.role == "super_admin") adminCenters = await SuperObj.adminCenters(connectedUser.token)
-    if (connectedUser.data.role == "admin_center") categeories = await AdminObj.getAllManagers(connectedUser.token)
-    // if (connectedUser.data.role == "manager") const categeories = await ManagerObj.promotions(connectedUser.token)
+    if (connectedUser.data.role == "admin_center") {
+        categeories = await AdminObj.getAllManagers(connectedUser.token)
+        promotions = await AdminObj.promotions(connectedUser.token)
+        if (!promotions.error) {
 
+            let done = promotions.filter(promotion => promotion.status == "accepted")
+            let Rejected = promotions.filter(promotion => promotion.status == "Rejected")
+            let pending = promotions.filter(promotion => promotion.status == "pending")
 
-    var options = {
-        chart: {
-            type: 'area',
-            stacked: true,
+            console.log(done, Rejected, pending);
 
-        },
-        fill: {
-            type: 'gradient',
-            gradient: {
-                opacityFrom: 0.6,
-                opacityTo: 0.8,
+            var options = {
+                chart: {
+                    type: 'donut'
+                },
+                series: [done.length, Rejected.length, pending.length],
+                labels: ['accepted', 'rejected', 'pending']
             }
-        },
-        legend: {
-            position: 'top',
-            horizontalAlign: 'left'
-        },
-        strock: {
-            curve: 'smooth',
-        },
-        series: [{
-            name: 'sales',
-            data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
-        }],
-        xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+
+        }
+    }
+    if (connectedUser.data.role == "manager") {
+        promotions = await ManagerObj.managerPromotions(connectedUser.token)
+        if (!promotions.error) {
+            console.log(promotions);
+            let done = promotions.filter(promotion => promotion.status == "accepted")
+            let Rejected = promotions.filter(promotion => promotion.status == "Rejected")
+            let pending = promotions.filter(promotion => promotion.status == "pending")
+
+            console.log(done, Rejected, pending);
+
+            var options = {
+                chart: {
+                    type: 'donut'
+                },
+                series: [done.length, Rejected.length, pending.length],
+                labels: ['accepted', 'rejected', 'pending']
+            }
         }
     }
 
     goTo('/', {
-        user: connectedUser.data, categeories, adminCenters
+        user: connectedUser.data, categeories, adminCenters, error: promotions?.error ? promotions.error : null,
     }, [
         () => {
             var chart = new ApexCharts(document.querySelector("#main-chart"), options);
@@ -100,18 +109,55 @@ export const managers = async (path, arg) => {
 };
 export const Promotions = async (path, arg) => {
     const connectedUser = AuthObj.connectedUser
-    const promotions = await AdminObj.promotions(connectedUser.token)
+    let promotions = []
     const products = await AdminObj.products(connectedUser.token)
-    goTo((`${path}`), { user: connectedUser.data, promotions, products, state: arg })
+    if (connectedUser.data.role == "super_admin") {
+        
+        promotions = await SuperObj.promotions(connectedUser.token)
+
+        console.log(promotions);
+        let done = promotions.filter(promotion => promotion.status == "accepted")
+        let Rejected = promotions.filter(promotion => promotion.status == "Rejected")
+        let pending = promotions.filter(promotion => promotion.status == "pending")
+
+        console.log(done, Rejected, pending);
+
+        var options = {
+            chart: {
+                type: 'donut'
+            },
+            series: [done.length, Rejected.length, pending.length],
+            labels: ['accepted', 'rejected', 'pending']
+        }
+
+        goTo((`${path}`), { user: connectedUser.data, promotions, products, state: arg }, [
+            () => {
+                var chart = new ApexCharts(document.querySelector("#main-chart"), options);
+                chart.render();
+            }
+        ])
+
+    } else {
+        promotions = await AdminObj.promotions(connectedUser.token)
+        goTo((`${path}`), { user: connectedUser.data, promotions, products, state: arg })
+
+    }
 };
 
 export const managerPromotions = async (path, arg) => {
     const connectedUser = AuthObj.connectedUser
     const promotions = await ManagerObj.managerPromotions(connectedUser.token)
     // const products = await AdminObj.products(connectedUser.token)
-    goTo((`${path}`), { user: connectedUser.data, promotions, state: arg })
+    promotions.error ? goTo((`${path}`), { user: connectedUser.data, error: promotions.error, state: arg }) : goTo((`${path}`), { user: connectedUser.data, promotions, state: arg })
+
 };
 
+
+const mylogs = async () => {
+    const connectedUser = AuthObj.connectedUser
+    const logs = await _.logs(connectedUser.data.id)
+    goTo('/mylogs', { user: connectedUser.data, logs })
+}
 
 
 export const ref = [
@@ -139,5 +185,9 @@ export const ref = [
     {
         path: "/manager_promotions",
         func: managerPromotions
+    },
+    {
+        path: "/mylogs",
+        func: mylogs
     }
 ]

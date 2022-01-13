@@ -1,4 +1,4 @@
-import { AdminObj, AuthObj, back, get } from "../helpers";
+import { AdminObj, AuthObj, back, get, ManagerObj } from "../helpers";
 import { header } from "../components";
 import { ref } from "../Mout";
 import { goTo, router, SuperObj, render } from "../helpers";
@@ -150,6 +150,34 @@ class Controller {
         let res = await AdminObj.addPromotion(data);
         if (res.error) console.log(res.error);
         this.goToSync("/promotions");
+        return res;
+    }
+
+    assign = async (data) => {
+        let res = await SuperObj.assign(data);
+        if (res.error) console.log(res.error);
+        this.goToSync("/centers");
+        return res;
+    }
+
+    updatePromotionStatus = async (data) => {
+        let res = await ManagerObj.updatePromotionStatus(data);
+        if (res.error) console.log(res.error);
+        this.goToSync("/manager_promotions");
+        return res;
+    }
+
+    deleteManager = async (id) => {
+        let res = await AdminObj.deletManager(id);
+        if (res.error) console.log(res.error);
+        this.goToSync("/managers");
+        return res;
+    }
+
+
+    logs = async (id) => {
+        let res = await get((`/log/${id}`));
+        if (res.error) console.log(res.error);
         return res;
     }
 }

@@ -5,6 +5,7 @@ import { SuperAdmin } from './Super'
 import { Admins } from './Admins'
 import { Managers } from './Managers'
 import { Promotions } from './Promotions'
+import { logs } from './logs'
 
 
 
@@ -41,6 +42,16 @@ let pages = [
   {
     page: Promotions,
     path: "promotions",
+    auth: true
+  },
+  {
+    page: Promotions,
+    path: "manager_promotions",
+    auth: true
+  },
+  {
+    page: logs,
+    path: "mylogs",
     auth: true
   }
 ]
